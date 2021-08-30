@@ -1,7 +1,10 @@
 from view.menus import main_menu
+from controller.menu import menu_choice
 
 def main():
-    main_menu()
+    choice = main_menu()
+    menu_choice(choice)
+
 
 if __name__ == "__main__":
     main()

@@ -1,16 +1,15 @@
 def menu_choice(choice):
-    match choice:
-        case 1:
-            return 1
-        case 2:
-            return 2
-        case 3:
-            return 3
-        case 4:
-            return 4
-        case 5:
-            return 5
-        case 0:
-            return 6
-        case _:        
-            return 0   # 0 is the default case if x is not found
+    if choice == "1":
+        print("Ajout de joueur")
+    elif choice == "2":
+        print("Création de tournoi")
+    elif choice == "3":
+        print("Importation de tournoi")
+    elif choice == "4":
+        print("Liste des joueurs")
+    elif choice == "5":
+        print("Liste des tournois")
+    elif choice == "0":
+        print("Quitter")
+    else:
+        print("erreur : " + choice)

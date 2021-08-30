@@ -9,3 +9,6 @@ def main_menu():
     print("5: Liste des tournois")
     print("0: Quitter")
     print("_________________________________________________________")
+    print("")
+    choice = input("Choix de l'option :")
+    return choice
