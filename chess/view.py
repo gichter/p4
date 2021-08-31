@@ -11,7 +11,8 @@ def main_menu():
     print("_________________________________________________________")
     print("")
 
-def player_list(player_db):
+def show_player_list(player_db):
+    print("Il y a " + str(len(player_db)) + " joueurs inscrits en base de données")
     for item in player_db:
-        print(item)
+        print(item['name'] + ", " + str(item['elo']) + " elo")
     return 0
