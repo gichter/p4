@@ -10,5 +10,8 @@ def main_menu():
     print("0: Quitter")
     print("_________________________________________________________")
     print("")
-    choice = input("Choix de l'option :")
-    return choice
+
+def player_list(player_db):
+    for item in player_db:
+        print(item)
+    return 0
