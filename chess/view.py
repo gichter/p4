@@ -16,3 +16,18 @@ def show_player_list(player_db):
     for item in player_db:
         print(item['name'] + ", " + str(item['elo']) + " elo")
     return 0
+
+def prompt_new_player():
+    lastname = input("nom ?")
+    firstname = input("prénom ?")
+    birthdate = input("date de naissance ?")
+    sex = input("sexe ?")
+    elo = input("elo ?")
+    player = {
+        'lastname': lastname,
+        'firstname': firstname,
+        'birthdate': birthdate,
+        'sex': sex,
+        'elo': elo,
+    }
+    return player

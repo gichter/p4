@@ -11,7 +11,7 @@ class Player(object):
         self.elo = elo
 
 
-    def serialize_player(self):
+    def insert_user(self):
         serialized_player = {
             'lastname': self.lastname,
             'firstname': self.firstname,
@@ -19,4 +19,4 @@ class Player(object):
             'sex': self.sex,
             'elo': self.elo,
         }
-        return serialized_player
+        return db.insert(serialized_player)
