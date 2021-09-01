@@ -1,2 +1,3 @@
 venv/
 players.json
+chess/__pycache__/
