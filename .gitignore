@@ -2,3 +2,4 @@ venv/
 players.json
 chess/__pycache__/
 .vscode/launch.json
+.vscode/settings.json
