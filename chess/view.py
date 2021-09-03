@@ -17,6 +17,25 @@ def show_player_list(player_db):
         print(item['name'] + ", " + str(item['elo']) + " elo")
     return 0
 
+def prompt_new_tournament():
+    name = input("nom du tournoi ?")
+    location = input("Lieu ?")
+    date = input("Date ?")
+    number_of_turns = input("Nombre de tours ?")
+    instances = input("Tournées ?")
+    time_control = input("Format ?")
+    description = input("Description ?")
+    tournament = {
+        'name': name,
+        'location': location,
+        'date': date,
+        'number_of_turns': number_of_turns,
+        'instances': instances,
+        'time_control': time_control,
+        'description': description,
+    }
+    return tournament
+
 def prompt_new_player():
     lastname = input("nom ?")
     firstname = input("prénom ?")
