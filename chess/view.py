@@ -1,4 +1,5 @@
 from os import system, name
+from pprint import pprint
 
 def main_menu():
     clear_terminal()
@@ -64,3 +65,10 @@ def clear_terminal():
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
+
+#debug function (pprint tounament) TODO : delete this
+def print_object(obj):
+    pprint(obj.__dict__)
+    for player in obj.players:
+        pprint(player.__dict__)
+    input()
