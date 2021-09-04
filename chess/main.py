@@ -3,15 +3,14 @@
 
 import view
 from tinydb import TinyDB
-from model import Player, Tournament
+from model import Player, Tournament, clear_saves
 
 def show_players():
     db = TinyDB("players.json")
     return view.show_player_list(db)
 
-def add_player():
-    prompted_player = view.prompt_new_player()
-    print(prompted_player)
+def add_player(player_number):
+    prompted_player = view.prompt_new_player(player_number)
     player = Player(lastname=prompted_player['lastname'], 
                         firstname=prompted_player['firstname'],
                         birthdate=prompted_player['birthdate'], 
@@ -21,7 +20,6 @@ def add_player():
 
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
-    print(prompted_tournament)
     tournament = Tournament(name = prompted_tournament['name'], 
                             location = prompted_tournament['location'], 
                             date = prompted_tournament['date'], 
@@ -32,6 +30,7 @@ def add_tournament():
     return tournament.insert_tournament()
 
 def create_tournament():
+    view.clear_terminal()
     while True:
         delete_tournament = input("Attention, vous allez perdre les dernières données enregistrées.\n"
                                     "0: Quitter en conservant les données\n"
@@ -40,13 +39,16 @@ def create_tournament():
         if delete_tournament == "0":
             break
         elif delete_tournament == "1":
+            clear_saves()
             add_tournament()
             create_player_pool()
         else:
             print("Erreur de saisie.\n")
 
 def create_player_pool():
-    pass
+    for player_number in range(1, 9):
+        view.clear_terminal()
+        add_player(player_number)
 
 def main():
     while True:
@@ -66,7 +68,6 @@ def main():
             break
         else:
             print("erreur : " + choice)
-
 
 if __name__ == "__main__":
     main()

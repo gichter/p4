@@ -1,4 +1,7 @@
+from os import system, name
+
 def main_menu():
+    clear_terminal()
     print("_________________________________________________________")
     print("")
     print("Menu principal")
@@ -18,6 +21,7 @@ def show_player_list(player_db):
     return 0
 
 def prompt_new_tournament():
+    clear_terminal()
     name = input("nom du tournoi ?")
     location = input("Lieu ?")
     date = input("Date ?")
@@ -36,7 +40,9 @@ def prompt_new_tournament():
     }
     return tournament
 
-def prompt_new_player():
+def prompt_new_player(player_number):
+    clear_terminal()
+    print("Veuillez entrer le joueur numéro ", player_number)
     lastname = input("nom ?")
     firstname = input("prénom ?")
     birthdate = input("date de naissance ?")
@@ -50,3 +56,11 @@ def prompt_new_player():
         'elo': elo,
     }
     return player
+
+def clear_terminal():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')

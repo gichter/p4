@@ -46,3 +46,7 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
+
+def clear_saves():
+    db_players.truncate()
+    db_tournament.truncate()
