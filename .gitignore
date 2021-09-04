@@ -5,3 +5,4 @@ chess/__pycache__/
 .vscode/settings.json
 tournament.json
 players copy.json
+flake-report/
