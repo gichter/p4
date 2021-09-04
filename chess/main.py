@@ -16,7 +16,8 @@ def add_player(player_number):
                         birthdate=prompted_player['birthdate'], 
                         sex=prompted_player['sex'], 
                         elo=prompted_player['elo'])
-    return player.insert_user()
+    player.insert_user()
+    return player
 
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
@@ -27,7 +28,8 @@ def add_tournament():
                             instances = prompted_tournament['instances'], 
                             time_control = prompted_tournament['time_control'], 
                             description = prompted_tournament['description'])
-    return tournament.insert_tournament()
+    tournament.insert_tournament()
+    return tournament
 
 def create_tournament():
     view.clear_terminal()
@@ -40,15 +42,16 @@ def create_tournament():
             break
         elif delete_tournament == "1":
             clear_saves()
-            add_tournament()
-            create_player_pool()
+            tournament = add_tournament()
+            create_player_pool(tournament)
         else:
             print("Erreur de saisie.\n")
 
-def create_player_pool():
+def create_player_pool(tournament):
     for player_number in range(1, 9):
         view.clear_terminal()
-        add_player(player_number)
+        player = add_player(player_number)
+        tournament.add_player(player)
 
 def main():
     while True:
