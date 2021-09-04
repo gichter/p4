@@ -1,6 +1,7 @@
 from os import system, name
 from pprint import pprint
 
+
 def main_menu():
     clear_terminal()
     print("_________________________________________________________")
@@ -15,11 +16,13 @@ def main_menu():
     print("_________________________________________________________")
     print("")
 
+
 def show_player_list(player_db):
     print("Il y a " + str(len(player_db)) + " joueurs inscrits en base de données")
     for item in player_db:
         print(item['name'] + ", " + str(item['elo']) + " elo")
     return 0
+
 
 def prompt_new_tournament():
     clear_terminal()
@@ -41,6 +44,7 @@ def prompt_new_tournament():
     }
     return tournament
 
+
 def prompt_new_player(player_number):
     clear_terminal()
     print("Veuillez entrer le joueur numéro ", player_number)
@@ -58,6 +62,7 @@ def prompt_new_player(player_number):
     }
     return player
 
+
 def clear_terminal():
     # for windows
     if name == 'nt':
@@ -66,7 +71,8 @@ def clear_terminal():
     else:
         _ = system('clear')
 
-#debug function (pprint tounament) TODO : delete this
+
+# debug function (pprint tounament) TODO : delete this
 def print_object(obj):
     pprint(obj.__dict__)
     for player in obj.players:
