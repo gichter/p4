@@ -34,6 +34,9 @@ class Tournament(object):
         self.time_control = time_control
         self.description = description
     
+    def add_player(self, player):
+        self.players.append(player)
+    
     def insert_tournament(self):
         serialized_tournament = {
             'name': self.name,
