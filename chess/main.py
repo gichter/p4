@@ -1,25 +1,24 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
+from view import prompt_new_player
 import view
 from tinydb import TinyDB
-from model import Player, Tournament, clear_saves
+from model import Player, Tournament
 
 
 def show_players():
     db = TinyDB("players.json")
-    return view.show_player_list(db)
+    view.show_player_list(db)
 
 
-def add_player(player_number):
-    prompted_player = view.prompt_new_player(player_number)
+def add_player(prompted_player):
     player = Player(lastname=prompted_player['lastname'],
                     firstname=prompted_player['firstname'],
                     birthdate=prompted_player['birthdate'],
-                    sex=prompted_player['sex'],
-                    elo=prompted_player['elo'])
-    player.insert_user()
-    return player
+                    sex=prompted_player['sex']
+                    )
+    return player.insert_user()
 
 
 def add_tournament():
@@ -31,33 +30,29 @@ def add_tournament():
                             instances=prompted_tournament['instances'],
                             time_control=prompted_tournament['time_control'],
                             description=prompted_tournament['description'])
-    tournament.insert_tournament()
+#    tournament.insert_tournament()
     return tournament
 
 
 def create_tournament():
-    view.clear_terminal()
-    while True:
-        delete_tournament = input(
-            "Attention, vous allez perdre les dernières données enregistrées.\n"
-            "0: Quitter en conservant les données\n"
-            "1: Ecraser les données et continuer\n"
-            "Saisissez votre choix : ")
-        if delete_tournament == "0":
-            break
-        elif delete_tournament == "1":
-            clear_saves()
-            tournament = add_tournament()
-            create_player_pool(tournament)
-        else:
-            print("Erreur de saisie.\n")
+    tournament = add_tournament()
+    create_player_pool(tournament)
 
 
 def create_player_pool(tournament):
-    for player_number in range(1, 9):
-        view.clear_terminal()
-        player = add_player(player_number)
-        tournament.add_player(player)
+    for i in range(1, 9):
+        while True:
+            choice = input('0 créer joueur'
+                           '1 rechercher joueur')
+            if(choice == '0'):
+                view.clear_terminal()
+                player_id = add_player(view.prompt_new_player())
+                tournament.add_player(player_id)
+                print('Player ' + str(i) + 'added')
+                break
+            elif(choice == '1'):  # search player then add him to the tournament
+                pass
+    tournament.insert_tournament()
 
 
 def main():
@@ -65,13 +60,13 @@ def main():
         view.main_menu()
         choice = input("Choix de l'option :")
         if choice == "1":
-            add_player()
+            add_player(view.prompt_new_player())
         elif choice == "2":
             create_tournament()
         elif choice == "3":
             print("Importation de tournoi")
         elif choice == "4":
-            print("liste des joueurs")
+            show_players()
         elif choice == "5":
             print("Liste des tournois")
         elif choice == "0":

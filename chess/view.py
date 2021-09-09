@@ -1,5 +1,6 @@
 from os import system, name
 from pprint import pprint
+from tinydb import where
 
 
 def main_menu():
@@ -20,8 +21,8 @@ def main_menu():
 def show_player_list(player_db):
     print("Il y a " + str(len(player_db)) + " joueurs inscrits en base de données")
     for item in player_db:
-        print(item['name'] + ", " + str(item['elo']) + " elo")
-    return 0
+        print(item.doc_id)
+        print(item['lastname'] + " " + item['firstname'] + ", " + str(item['score']) + " elo")
 
 
 def prompt_new_tournament():
@@ -45,20 +46,18 @@ def prompt_new_tournament():
     return tournament
 
 
-def prompt_new_player(player_number):
+def prompt_new_player():
     clear_terminal()
-    print("Veuillez entrer le joueur numéro ", player_number)
+    print("Veuillez entrer le joueur")
     lastname = input("nom ?")
     firstname = input("prénom ?")
     birthdate = input("date de naissance ?")
     sex = input("sexe ?")
-    elo = input("elo ?")
     player = {
         'lastname': lastname,
         'firstname': firstname,
         'birthdate': birthdate,
         'sex': sex,
-        'elo': elo,
     }
     return player
 
