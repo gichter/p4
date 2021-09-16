@@ -69,7 +69,9 @@ def main():
             show_players()
         elif choice == "5":
             print("Liste des tournois")
-        elif choice == "0":
+        elif choice == "5":
+            print("Récupérer le dernier tournoi en cours")
+        elif choice == "6":
             break
         else:
             print("erreur : " + choice)
