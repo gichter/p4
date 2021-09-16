@@ -20,7 +20,7 @@ def main_menu():
 def show_player_list(player_db):
     print("Il y a " + str(len(player_db)) + " joueurs inscrits en base de données")
     for item in player_db:
-        print(item['name'] + ", " + str(item['elo']) + " elo")
+        print(item['name'])
     return 0
 
 
@@ -47,18 +47,17 @@ def prompt_new_tournament():
 
 def prompt_new_player(player_number):
     clear_terminal()
-    print("Veuillez entrer le joueur numéro ", player_number)
+    if (player_number != 0):
+        print("Veuillez entrer le joueur numéro ", player_number)
     lastname = input("nom ?")
     firstname = input("prénom ?")
     birthdate = input("date de naissance ?")
     sex = input("sexe ?")
-    elo = input("elo ?")
     player = {
         'lastname': lastname,
         'firstname': firstname,
         'birthdate': birthdate,
         'sex': sex,
-        'elo': elo,
     }
     return player
 

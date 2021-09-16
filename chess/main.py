@@ -3,7 +3,7 @@
 
 import view
 from tinydb import TinyDB
-from model import Player, Tournament, clear_saves
+from model import Player, Tournament
 
 
 def show_players():
@@ -11,14 +11,13 @@ def show_players():
     return view.show_player_list(db)
 
 
-def add_player(player_number):
+def create_player(player_number):
     prompted_player = view.prompt_new_player(player_number)
     player = Player(lastname=prompted_player['lastname'],
                     firstname=prompted_player['firstname'],
                     birthdate=prompted_player['birthdate'],
-                    sex=prompted_player['sex'],
-                    elo=prompted_player['elo'])
-    player.insert_user()
+                    sex=prompted_player['sex'])
+    player.insert_player()
     return player
 
 
@@ -46,7 +45,6 @@ def create_tournament():
         if delete_tournament == "0":
             break
         elif delete_tournament == "1":
-            clear_saves()
             tournament = add_tournament()
             create_player_pool(tournament)
         else:
@@ -56,7 +54,7 @@ def create_tournament():
 def create_player_pool(tournament):
     for player_number in range(1, 9):
         view.clear_terminal()
-        player = add_player(player_number)
+        player = create_player(player_number)
         tournament.add_player(player)
 
 
@@ -65,7 +63,7 @@ def main():
         view.main_menu()
         choice = input("Choix de l'option :")
         if choice == "1":
-            add_player()
+            create_player(0)
         elif choice == "2":
             create_tournament()
         elif choice == "3":
