@@ -1,4 +1,4 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, where
 
 db_players = TinyDB('players.json')
 db_tournament = TinyDB('tournament.json')
@@ -51,6 +51,25 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
+
+        """ call this function to save actual tournament state, even in between rounds.
+            use load_state to retrieve the data saved.
+        """
+def save_state(tournament):
+    pass
+
+    """ loads the saved tournament 
+        cases : - 0-7 players are in the tournament => finishes to get the players 
+                - rounds have started : 
+
+    """
+def load_state(tournament):
+    pass
+
+
+def search_players_by_lastname(lastname):
+    print(db_players.search(where('lastname') == lastname))
+    input("")
 
 
 def clear_saves():

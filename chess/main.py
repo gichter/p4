@@ -4,7 +4,7 @@
 from view import prompt_new_player
 import view
 from tinydb import TinyDB
-from model import Player, Tournament
+from model import Player, Tournament, search_players_by_lastname
 
 
 def show_players():
@@ -51,7 +51,8 @@ def create_player_pool(tournament):
                 print('Player ' + str(i) + 'added')
                 break
             elif(choice == '1'):  # search player then add him to the tournament
-                pass
+                lastname = input('lastname')
+                search_players_by_lastname(lastname)
     tournament.insert_tournament()
 
 
