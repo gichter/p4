@@ -1,6 +1,5 @@
 from os import system, name
 from pprint import pprint
-from tinydb import where
 
 
 def main_menu():
@@ -13,7 +12,7 @@ def main_menu():
     print("3: Charger un tournoi")
     print("4: Liste des joueurs enregistrés")
     print("5: Liste des tournois")
-    print("6: Récupérer le dernier tournoi en cours")
+    print("6: Modifier les informations d'un joueur")
     print("0: Quitter")
     print("_________________________________________________________")
     print("")

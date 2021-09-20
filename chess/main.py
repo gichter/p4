@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-from view import prompt_new_player
 import view
 from tinydb import TinyDB
 from model import Player, Tournament, search_players_by_lastname
@@ -71,7 +70,7 @@ def main():
         elif choice == "5":
             print("Liste des tournois")
         elif choice == "5":
-            print("Récupérer le dernier tournoi en cours")
+            print("Modifier un joueur")
         elif choice == "6":
             break
         else:

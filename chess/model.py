@@ -60,9 +60,10 @@ def save_state(tournament):
 
     """ loads the saved tournament 
         cases : - 0-7 players are in the tournament => finishes to get the players 
-                - rounds have started : 
-
+                - rounds have started :
     """
+
+
 def load_state(tournament):
     pass
 
