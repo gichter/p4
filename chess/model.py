@@ -54,6 +54,11 @@ class Tournament(object):
         return db_tournament.insert(serialized_tournament)
 
 
+def load_players():
+    return db_players.all()
+
+
+
 def search_players_by_lastname(lastname):
     Players = Query()
     return db_players.search(Players.lastname.matches(lastname, flags=re.IGNORECASE))

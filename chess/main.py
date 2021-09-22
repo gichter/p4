@@ -3,8 +3,7 @@
 
 import view
 from tinydb import TinyDB
-from model import Player, Tournament, search_players_by_lastname, search_tournament_by_name
-
+import model
 
 def show_players():
     db = TinyDB("players.json")
@@ -12,7 +11,7 @@ def show_players():
 
 
 def add_player(prompted_player):
-    player = Player(lastname=prompted_player['lastname'],
+    player = model.Player(lastname=prompted_player['lastname'],
                     firstname=prompted_player['firstname'],
                     birthdate=prompted_player['birthdate'],
                     sex=prompted_player['sex']
@@ -22,7 +21,7 @@ def add_player(prompted_player):
 
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
-    tournament = Tournament(name=prompted_tournament['name'],
+    tournament = model.Tournament(name=prompted_tournament['name'],
                             location=prompted_tournament['location'],
                             date=prompted_tournament['date'],
                             number_of_turns=prompted_tournament['number_of_turns'],
@@ -51,13 +50,19 @@ def create_player_pool(tournament):
                 break
             elif(choice == '1'):  # search player then add him to the tournament
                 lastname = input('lastname')
-                search_players_by_lastname(lastname)
+                model.search_players_by_lastname(lastname)
     tournament.insert_tournament()
+
+
+def edit_player():
+    lastname = input('lastname')
+    player_id = view.select_player(model.search_players_by_lastname(lastname))
+    input("")
 
 
 def import_tournament():
     name = input('tournament name ?')
-    search_tournament_by_name(name)
+    model.search_tournament_by_name(name)
 
 
 
@@ -72,15 +77,14 @@ def main():
         elif choice == "3":
             import_tournament()
         elif choice == "4":
-            show_players()
+            view.display_players(model.load_players())
+            input("")
         elif choice == "5":
             print("Liste des tournois")
         elif choice == "5":
             print("Modifier un joueur")
         elif choice == "6":
-            lastname = input('lastname')
-            view.display_players(search_players_by_lastname(lastname))
-            input("")
+            edit_player()
         else:
             print("erreur : " + choice)
 
