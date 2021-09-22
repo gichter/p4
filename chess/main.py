@@ -65,12 +65,12 @@ def edit_player():
     input("Joueur modifié avec succès. Appuyez sur une touche pour continuer")
 
 
+# returns a tournament object after asking the user to select one
 def import_tournament():
     name = input('tournament name ?')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
     input(tournament_data)
-    t = model.Tournament(model.search_tournament_by_name(name))
-    input(model.create_tournament_from_dict(t))
+    return model.Tournament(tournament_data)
 
 
 def main():

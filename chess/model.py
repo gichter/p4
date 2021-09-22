@@ -27,15 +27,12 @@ class Player(object):
 
 
 class Tournament(object):
-    def __init__(self, name, location, date, number_of_turns, instances, time_control, description):
-        self.name = name
-        self.location = location
-        self.date = date
-        self.number_of_turns = number_of_turns
-        self.instances = instances
+    __slots__ = ['name', 'location', 'date', 'players', 'number_of_turns', 'instances', 'time_control', 'description']
+
+    def __init__(self, data):
         self.players = []
-        self.time_control = time_control
-        self.description = description
+        for key in data:
+            setattr(self, key, data[key])
 
     def add_player(self, player):
         self.players.append(player)

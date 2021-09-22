@@ -91,7 +91,6 @@ def select_tournament(tournaments):
     return tournament
 
 
-
 def clear_terminal():
     # for windows
     if name == 'nt':
