@@ -23,15 +23,15 @@ def add_player(prompted_player):
 
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
-    tournament = model.Tournament(
-        name=prompted_tournament['name'],
-        location=prompted_tournament['location'],
-        date=prompted_tournament['date'],
-        number_of_turns=prompted_tournament['number_of_turns'],
-        instances=prompted_tournament['instances'],
-        time_control=prompted_tournament['time_control'],
-        description=prompted_tournament['description']
-        )
+    tournament = model.Tournament({
+        "name": prompted_tournament['name'],
+        "location": prompted_tournament['location'],
+        "date": prompted_tournament['date'],
+        "number_of_turns": prompted_tournament['number_of_turns'],
+        "instances": prompted_tournament['instances'],
+        "time_control": prompted_tournament['time_control'],
+        "description": prompted_tournament['description']
+    })
     return tournament
 
 

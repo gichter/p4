@@ -49,10 +49,10 @@ def prompt_new_tournament():
 def prompt_new_player():
     clear_terminal()
     print("Veuillez entrer le joueur")
-    lastname = input("nom ?")
-    firstname = input("prénom ?")
-    birthdate = input("date de naissance ?")
-    sex = input("sexe ?")
+    lastname = input("nom ? ")
+    firstname = input("prénom ? ")
+    birthdate = input("date de naissance ? ")
+    sex = input("sexe ? ")
     player = {
         'lastname': lastname,
         'firstname': firstname,
