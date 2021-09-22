@@ -3,7 +3,7 @@
 
 import view
 from tinydb import TinyDB
-from model import Player, Tournament, search_players_by_lastname
+from model import Player, Tournament, search_players_by_lastname, search_tournament_by_name
 
 
 def show_players():
@@ -55,6 +55,12 @@ def create_player_pool(tournament):
     tournament.insert_tournament()
 
 
+def import_tournament():
+    name = input('tournament name ?')
+    search_tournament_by_name(name)
+
+
+
 def main():
     while True:
         view.main_menu()
@@ -64,7 +70,7 @@ def main():
         elif choice == "2":
             create_tournament()
         elif choice == "3":
-            print("Importation de tournoi")
+            import_tournament()
         elif choice == "4":
             show_players()
         elif choice == "5":
@@ -72,7 +78,9 @@ def main():
         elif choice == "5":
             print("Modifier un joueur")
         elif choice == "6":
-            break
+            lastname = input('lastname')
+            view.display_players(search_players_by_lastname(lastname))
+            input("")
         else:
             print("erreur : " + choice)
 

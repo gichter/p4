@@ -62,6 +62,13 @@ def prompt_new_player():
     return player
 
 
+def display_players(players):
+    i = 0
+    for player in players:
+        i += 1
+        print(str(i) + ": " + player["firstname"] + " " + player["lastname"])
+
+
 def clear_terminal():
     # for windows
     if name == 'nt':
