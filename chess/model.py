@@ -1,4 +1,4 @@
-from tinydb import TinyDB, where, Query
+from tinydb import TinyDB, Query, table
 import re
 
 db_players = TinyDB('players.json')
@@ -54,9 +54,17 @@ class Tournament(object):
         return db_tournament.insert(serialized_tournament)
 
 
+def update_player(player, player_id):
+    db_players.upsert(table.Document({
+            'lastname': player['lastname'],
+            'firstname': player['firstname'],
+            'birthdate': player['birthdate'],
+            'sex': player['sex'],
+            }, doc_id=int(player_id)))
+
+
 def load_players():
     return db_players.all()
-
 
 
 def search_players_by_lastname(lastname):
@@ -67,6 +75,10 @@ def search_players_by_lastname(lastname):
 def search_tournament_by_name(name):
     Tournaments = Query()
     return db_tournament.search(Tournaments.name.matches(name, flags=re.IGNORECASE))
+
+
+def create_tournament_from_dict(dict):
+    input(Tournament(table.Document(dict)))
 
 
 def clear_saves():

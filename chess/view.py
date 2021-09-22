@@ -63,6 +63,7 @@ def prompt_new_player():
 
 
 def display_players(players):
+    clear_terminal()
     i = 0
     for player in players:
         i += 1
@@ -73,6 +74,22 @@ def select_player(players):
     display_players(players)
     choice = input("Quel joueur souhaitez-vous modifier ? Sélectionnez son index.")
     return list(players)[int(choice) - 1].doc_id
+
+
+def display_tournaments(tournaments):
+    clear_terminal()
+    i = 0
+    for tournament in tournaments:
+        i += 1
+        print(str(i) + ": " + tournament["name"])
+
+
+def select_tournament(tournaments):
+    display_tournaments(tournaments)
+    choice = input("Quel tournoi souhaitez-vous charger ? Sélectionnez son index.")
+    tournament = list(tournaments)[int(choice) - 1]
+    return tournament
+
 
 
 def clear_terminal():
