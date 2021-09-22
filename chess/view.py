@@ -86,8 +86,9 @@ def display_tournaments(tournaments):
 
 def select_tournament(tournaments):
     display_tournaments(tournaments)
-    choice = input("Quel tournoi souhaitez-vous charger ? Sélectionnez son index.")
+    choice = input("Quel tournoi souhaitez-vous charger ? Sélectionnez son index.\n")
     tournament = list(tournaments)[int(choice) - 1]
+    input("Tournoi " + tournament['name'] + " chargé avec succès. Appuyez sur une touche pour continuer.\n")
     return tournament
 
 

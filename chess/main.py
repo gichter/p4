@@ -67,9 +67,8 @@ def edit_player():
 
 # returns a tournament object after asking the user to select one
 def import_tournament():
-    name = input('tournament name ?')
+    name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
-    input(tournament_data)
     return model.Tournament(tournament_data)
 
 
