@@ -57,8 +57,9 @@ def create_player_pool(tournament, number_of_players_to_add):
                 print('Player ' + str(i) + 'added')
                 break
             elif(choice == '2'):  # search player then add him to the tournament
-                lastname = input('lastname')
-                model.search_players_by_lastname(lastname)
+                lastname = input('Nom du joueur ?')
+                player_id = view.select_player(model.search_players_by_lastname(lastname))
+                tournament.add_player(player_id)
                 break
             elif(choice == '0'):
                 return tournament
