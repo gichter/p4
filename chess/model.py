@@ -25,6 +25,9 @@ class Player(object):
         }
         return db_players.insert(serialized_player)
 
+    def update_user(self):
+        pass
+
 
 class Tournament(object):
     __slots__ = ['name', 'location', 'date', 'players', 'number_of_turns', 'instances', 'time_control', 'description']
@@ -49,19 +52,6 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
-    
-    def insert_tournament(self):
-        serialized_tournament = {
-            'name': self.name,
-            'location': self.location,
-            'date': self.date,
-            'number_of_turns': self.number_of_turns,
-            'instances': self.instances,
-            'players': self.players,
-            'time_control': self.time_control,
-            'description': self.description,
-        }
-        return db_tournament.insert(serialized_tournament)
 
 
 def update_player(player, player_id):
@@ -71,6 +61,7 @@ def update_player(player, player_id):
             'birthdate': player['birthdate'],
             'sex': player['sex'],
             }, doc_id=int(player_id)))
+
 
 def update_tournament(tournament, tournament_id):
     if (isinstance(tournament_id, str)):

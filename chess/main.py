@@ -49,7 +49,7 @@ def create_player_pool(tournament, number_of_players_to_add):
             '1: Créer un nouveau Joueur\n'
             '2: Rechercher Joueur\n'
             '0 : Quitter et enregistrer le tournoi\n')
-        while True:                
+        while True:
             if(choice == '1'):
                 view.clear_terminal()
                 player_id = add_player(view.prompt_new_player())

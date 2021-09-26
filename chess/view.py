@@ -1,5 +1,4 @@
 from os import system, name
-from pprint import pprint
 
 
 def main_menu():
@@ -71,7 +70,7 @@ def display_players(players):
         i += 1
         print(str(i) + ": " + player["firstname"] + " " + player["lastname"])
 
-        
+
 def display_tournaments(tournaments):
     clear_terminal()
     i = 0
@@ -84,7 +83,6 @@ def select_player(players):
     display_players(players)
     choice = input("Quel joueur souhaitez-vous modifier ? Sélectionnez son index.")
     return list(players)[int(choice) - 1].doc_id
-
 
 
 def select_tournament(tournaments):
@@ -102,11 +100,3 @@ def clear_terminal():
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
-
-
-# debug function (pprint tounament) TODO : delete this
-def print_object(obj):
-    pprint(obj.__dict__)
-    for player in obj.players:
-        pprint(player.__dict__)
-    input()
