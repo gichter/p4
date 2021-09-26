@@ -49,6 +49,19 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
+    
+    def insert_tournament(self):
+        serialized_tournament = {
+            'name': self.name,
+            'location': self.location,
+            'date': self.date,
+            'number_of_turns': self.number_of_turns,
+            'instances': self.instances,
+            'players': self.players,
+            'time_control': self.time_control,
+            'description': self.description,
+        }
+        return db_tournament.insert(serialized_tournament)
 
 
 def update_player(player, player_id):
@@ -58,6 +71,18 @@ def update_player(player, player_id):
             'birthdate': player['birthdate'],
             'sex': player['sex'],
             }, doc_id=int(player_id)))
+
+def update_tournament(tournament, tournament_id):
+    db_tournament.upsert(table.Document({
+            'name': tournament.name,
+            'location': tournament.location,
+            'date': tournament.date,
+            'number_of_turns': tournament.number_of_turns,
+            'instances': tournament.instances,
+            'players': tournament.players,
+            'time_control': tournament.time_control,
+            'description': tournament.description,
+        }, doc_id=int(tournament_id)))
 
 
 def load_players():

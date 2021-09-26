@@ -37,25 +37,32 @@ def add_tournament():
 
 def create_tournament():
     tournament = add_tournament()
-    create_player_pool(tournament)
+    tournament = create_player_pool(tournament, 8)
+    return tournament.insert_tournament()
 
 
-def create_player_pool(tournament):
-    for i in range(1, 9):
-        while True:
-            choice = input(
-                '0 créer joueur'
-                '1 rechercher joueur')
-            if(choice == '0'):
+def create_player_pool(tournament, number_of_players_to_add):
+    for i in range(9 - number_of_players_to_add, 9):
+        view.clear_terminal()
+        choice = input(
+            'Ajout du joueur numéro ' + str(i) + '.\n'
+            '1: Créer un nouveau Joueur\n'
+            '2: Rechercher Joueur\n'
+            '0 : Quitter et enregistrer le tournoi\n')
+        while True:                
+            if(choice == '1'):
                 view.clear_terminal()
                 player_id = add_player(view.prompt_new_player())
                 tournament.add_player(player_id)
                 print('Player ' + str(i) + 'added')
                 break
-            elif(choice == '1'):  # search player then add him to the tournament
+            elif(choice == '2'):  # search player then add him to the tournament
                 lastname = input('lastname')
                 model.search_players_by_lastname(lastname)
-    tournament.insert_tournament()
+                break
+            elif(choice == '0'):
+                return tournament
+    return tournament
 
 
 def edit_player():
@@ -69,7 +76,11 @@ def edit_player():
 def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
-    return model.Tournament(tournament_data)
+    tournament = model.Tournament(tournament_data)
+    if(len(tournament.players) < 8):
+        tournament = create_player_pool(tournament, 8 - len(tournament.players))
+    model.update_tournament(tournament, tournament_data.doc_id)
+    return tournament
 
 
 def main():
@@ -88,10 +99,10 @@ def main():
         elif choice == "5":
             view.display_tournaments(model.load_tournaments())
             input("Appuyez sur une touche pour continuer")
-        elif choice == "5":
-            print("Modifier un joueur")
         elif choice == "6":
             edit_player()
+        elif choice == "0":
+            break
         else:
             print("erreur : " + choice)
 

@@ -27,13 +27,13 @@ def show_player_list(player_db):
 
 def prompt_new_tournament():
     clear_terminal()
-    name = input("nom du tournoi ?")
-    location = input("Lieu ?")
-    date = input("Date ?")
-    number_of_turns = input("Nombre de tours ?")
-    instances = input("Tournées ?")
-    time_control = input("Format ?")
-    description = input("Description ?")
+    name = input("Nom du tournoi ?\n")
+    location = input("Lieu ?\n")
+    date = input("Date ?\n")
+    number_of_turns = input("Nombre de tours ?\n")
+    instances = input("Tournées ?\n")
+    time_control = input("Format ?\n")
+    description = input("Description ?\n")
     tournament = {
         'name': name,
         'location': location,
