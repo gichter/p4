@@ -86,7 +86,8 @@ def main():
             view.display_players(model.load_players())
             input("Appuyez sur une touche pour continuer")
         elif choice == "5":
-            print("Liste des tournois")
+            view.display_tournaments(model.load_tournaments())
+            input("Appuyez sur une touche pour continuer")
         elif choice == "5":
             print("Modifier un joueur")
         elif choice == "6":

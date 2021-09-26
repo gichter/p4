@@ -64,6 +64,10 @@ def load_players():
     return db_players.all()
 
 
+def load_tournaments():
+    return db_tournament.all()
+
+
 def search_players_by_lastname(lastname):
     Players = Query()
     return db_players.search(Players.lastname.matches(lastname, flags=re.IGNORECASE))
