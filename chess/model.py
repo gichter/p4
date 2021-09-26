@@ -73,6 +73,8 @@ def update_player(player, player_id):
             }, doc_id=int(player_id)))
 
 def update_tournament(tournament, tournament_id):
+    if (isinstance(tournament_id, str)):
+        tournament_id = int(tournament_id)
     db_tournament.upsert(table.Document({
             'name': tournament.name,
             'location': tournament.location,
@@ -82,6 +84,18 @@ def update_tournament(tournament, tournament_id):
             'players': tournament.players,
             'time_control': tournament.time_control,
             'description': tournament.description,
+        }, doc_id=tournament_id))
+
+
+def update_tournament_dict(tournament, tournament_id):
+    db_tournament.upsert(table.Document({
+            'name': tournament['name'],
+            'location': tournament['location'],
+            'date': tournament['date'],
+            'number_of_turns': tournament['number_of_turns'],
+            'instances': tournament['instances'],
+            'time_control': tournament['time_control'],
+            'description': tournament['description'],
         }, doc_id=int(tournament_id)))
 
 

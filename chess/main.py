@@ -67,21 +67,34 @@ def create_player_pool(tournament, number_of_players_to_add):
 
 
 def edit_player():
-    lastname = input('lastname')
+    lastname = input('Saisissez le nom du joueur à modifier')
     player_id = view.select_player(model.search_players_by_lastname(lastname))
     model.update_player(view.prompt_new_player(), player_id)
     input("Joueur modifié avec succès. Appuyez sur une touche pour continuer")
+
+
+def edit_tournament():
+    name = input('Saisissez le nom du tournoi à modifier')
+    tournament_id = view.select_tournament(model.search_tournament_by_name(name)).doc_id
+    model.update_tournament_dict(view.prompt_new_tournament(), tournament_id)
+    input("Tournoi modifié avec succès. Appuyez sur une touche pour continuer")
 
 
 # returns a tournament object after asking the user to select one
 def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
+    print(tournament_data)
+    input()
     tournament = model.Tournament(tournament_data)
     if(len(tournament.players) < 8):
         tournament = create_player_pool(tournament, 8 - len(tournament.players))
     model.update_tournament(tournament, tournament_data.doc_id)
     return tournament
+
+
+def play_tournament():
+    pass
 
 
 def main():
@@ -102,6 +115,10 @@ def main():
             input("Appuyez sur une touche pour continuer")
         elif choice == "6":
             edit_player()
+        elif choice == "7":
+            edit_tournament()
+        elif choice == "8":
+            play_tournament()
         elif choice == "0":
             break
         else:

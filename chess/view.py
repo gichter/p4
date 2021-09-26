@@ -13,6 +13,8 @@ def main_menu():
     print("4: Liste des joueurs enregistrés")
     print("5: Liste des tournois")
     print("6: Modifier les informations d'un joueur")
+    print("7: Modifier les informations d'un tournoi")
+    print("8: Lancer le dernier tournoi chargé ou créé")
     print("0: Quitter")
     print("_________________________________________________________")
     print("")
