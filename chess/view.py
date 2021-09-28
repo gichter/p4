@@ -93,6 +93,28 @@ def select_tournament(tournaments):
     return tournament
 
 
+def print_round(players_list, round_number):
+    clear_terminal()
+    players_names = []
+    for p in players_list:
+        players_names.append(p.firstname + ' ' + p.lastname)
+
+    print(
+        '\nRound numéro ' + str(round_number) + '\n' +
+        '----------------------------------------------------\n'
+        'Match n°1 : ' + players_names[0] + ' vs ' +  players_names[1] + '\n' +
+        '----------------------------------------------------\n'
+        'Match n°2 : ' + players_names[2] + ' vs ' +  players_names[3] + '\n' +
+        '----------------------------------------------------\n'
+        'Match n°3 : ' + players_names[4] + ' vs ' +  players_names[5] + '\n' +
+        '----------------------------------------------------\n'
+        'Match n°4 : ' + players_names[6] + ' vs ' +  players_names[7] + '\n' +
+        '----------------------------------------------------\n' +
+        'Appuyez sur entrée pour saisir les résultats'
+    )
+    input()
+
+
 def clear_terminal():
     # for windows
     if name == 'nt':

@@ -1,5 +1,7 @@
 from tinydb import TinyDB, Query, table
 import re
+from datetime import datetime
+import view
 
 db_players = TinyDB('players.json')
 db_tournament = TinyDB('tournament.json')
@@ -34,7 +36,16 @@ class Player(object):
 
 
 class Tournament(object):
-    __slots__ = ['name', 'location', 'date', 'players', 'number_of_turns', 'instances', 'time_control', 'description']
+    def __init__(self, name, location, date_start, date_end, time_control, description, number_of_turns=4, players=[], rounds=[]):
+        self.name = name
+        self.location = location
+        self.date_start = date_start
+        self.date_end = date_end
+        self.time_control = time_control
+        self.description = description
+        self.number_of_turns = number_of_turns
+        self.players = players
+        self.rounds = rounds
 
     def __init__(self, data):
         self.players = []
@@ -43,6 +54,13 @@ class Tournament(object):
 
     def add_player(self, player):
         self.players.append(player)
+
+    def create_round(self, players_list):
+        if (len(self.rounds) <= int(self.number_of_turns)):
+            round = ["Round" + str(len(self.rounds)), datetime.now()]
+            view.print_round(players_list, len(self.rounds))
+            for i in range(4):
+                pass
 
     def insert_tournament(self):
         serialized_tournament = {
@@ -75,7 +93,7 @@ def update_tournament(tournament, tournament_id):
             'location': tournament.location,
             'date': tournament.date,
             'number_of_turns': tournament.number_of_turns,
-            'instances': tournament.instances,
+            'rounds': tournament.rounds,
             'players': tournament.players,
             'time_control': tournament.time_control,
             'description': tournament.description,
@@ -88,7 +106,7 @@ def update_tournament_dict(tournament, tournament_id):
             'location': tournament['location'],
             'date': tournament['date'],
             'number_of_turns': tournament['number_of_turns'],
-            'instances': tournament['instances'],
+            'rounds': tournament['rounds'],
             'time_control': tournament['time_control'],
             'description': tournament['description'],
         }, doc_id=int(tournament_id)))
@@ -114,10 +132,6 @@ def search_player_by_doc_id(doc_id):
 def search_tournament_by_name(name):
     Tournaments = Query()
     return db_tournament.search(Tournaments.name.matches(name, flags=re.IGNORECASE))
-
-
-def create_tournament_from_dict(dict):
-    input(Tournament(table.Document(dict)))
 
 
 def clear_saves():

@@ -12,6 +12,8 @@ def show_players():
 
 
 def add_player(prompted_player):
+    for i in range(50):
+        
     player = model.Player(
         lastname=prompted_player['lastname'],
         firstname=prompted_player['firstname'],
@@ -107,6 +109,8 @@ def play_tournament(tournament):
     for i in range(4):
         players_list.append(l1[i])
         players_list.append(l2[i])
+
+    tournament.create_round(players_list)
 
     for p in players_list:
         print(str(p.doc_id) + " score : " + str(p.total_score))
