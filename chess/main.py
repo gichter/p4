@@ -93,10 +93,23 @@ def import_tournament():
 
 def play_tournament(tournament):
     players_list = []
-    for player in tournament.players:
-        players_list.append(model.search_player_by_doc_id(player))
-    players_list.sort(key=lambda x: x.get('total_score'))
-    print(players_list)
+    for player_id in tournament.players:
+        p_dict = model.search_player_by_doc_id(player_id)
+        p = model.Player(lastname = p_dict['lastname'],firstname=p_dict['firstname'], birthdate=p_dict['birthdate'], sex=p_dict['sex'], total_score=p_dict['total_score'])
+        p.update_doc_id(player_id)
+        players_list.append(p)
+
+    players_list.sort(key=lambda x: x.total_score, reverse=True)
+    l1 = players_list[0:4]
+    l2 = players_list[4:8]
+    players_list = []
+    
+    for i in range(4):
+        players_list.append(l1[i])
+        players_list.append(l2[i])
+
+    for p in players_list:
+        print(str(p.doc_id) + " score : " + str(p.total_score))
     input()
     pass
 

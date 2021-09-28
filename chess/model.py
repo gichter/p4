@@ -6,13 +6,14 @@ db_tournament = TinyDB('tournament.json')
 
 
 class Player(object):
-    def __init__(self, lastname, firstname, birthdate, sex):
+    def __init__(self, lastname, firstname, birthdate, sex, total_score=0):
         self.lastname = lastname
         self.firstname = firstname
         self.birthdate = birthdate
         self.sex = sex
         self.score = 0
-        self.total_score = 0
+        self.total_score = total_score
+        self.doc_id = 0
 
     def insert_user(self):
         serialized_player = {
@@ -27,6 +28,9 @@ class Player(object):
 
     def update_user(self):
         pass
+
+    def update_doc_id(self, doc_id):
+        self.doc_id = doc_id
 
 
 class Tournament(object):
