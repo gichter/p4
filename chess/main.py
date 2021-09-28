@@ -84,8 +84,6 @@ def edit_tournament():
 def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
-    print(tournament_data)
-    input()
     tournament = model.Tournament(tournament_data)
     if(len(tournament.players) < 8):
         tournament = create_player_pool(tournament, 8 - len(tournament.players))
@@ -93,7 +91,13 @@ def import_tournament():
     return tournament
 
 
-def play_tournament():
+def play_tournament(tournament):
+    players_list = []
+    for player in tournament.players:
+        players_list.append(model.search_player_by_doc_id(player))
+    players_list.sort(key=lambda x: x.get('total_score'))
+    print(players_list)
+    input()
     pass
 
 
@@ -106,7 +110,7 @@ def main():
         elif choice == "2":
             create_tournament()
         elif choice == "3":
-            import_tournament()
+            t = import_tournament()
         elif choice == "4":
             view.display_players(model.load_players())
             input("Appuyez sur une touche pour continuer")
@@ -118,7 +122,7 @@ def main():
         elif choice == "7":
             edit_tournament()
         elif choice == "8":
-            play_tournament()
+            play_tournament(t)
         elif choice == "0":
             break
         else:

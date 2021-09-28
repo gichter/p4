@@ -103,6 +103,10 @@ def search_players_by_lastname(lastname):
     return db_players.search(Players.lastname.matches(lastname, flags=re.IGNORECASE))
 
 
+def search_player_by_doc_id(doc_id):
+    return db_players.get(doc_id=doc_id)
+
+
 def search_tournament_by_name(name):
     Tournaments = Query()
     return db_tournament.search(Tournaments.name.matches(name, flags=re.IGNORECASE))
