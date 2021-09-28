@@ -4,6 +4,7 @@
 import view
 from tinydb import TinyDB
 import model
+from faker import Faker
 
 
 def show_players():
@@ -12,8 +13,18 @@ def show_players():
 
 
 def add_player(prompted_player):
+    """
+    fake = Faker('fr_FR')
     for i in range(50):
-        
+        player = model.Player(
+        lastname=fake.last_name(),
+        firstname=fake.first_name(),
+        birthdate=fake.date_of_birth().isoformat(),
+        sex='M',
+        total_score=fake.pyint(0, 2500, 10)
+        )
+        player.insert_user()
+    """
     player = model.Player(
         lastname=prompted_player['lastname'],
         firstname=prompted_player['firstname'],

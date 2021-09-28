@@ -60,7 +60,10 @@ class Tournament(object):
             round = ["Round" + str(len(self.rounds)), datetime.now()]
             view.print_round(players_list, len(self.rounds))
             for i in range(4):
-                pass
+                round.append(view.ask_match_result(players_list[i*2], players_list[i*2+1]))
+        round.insert(2, datetime.now())
+        print(round)
+        input()
 
     def insert_tournament(self):
         serialized_tournament = {
@@ -68,7 +71,7 @@ class Tournament(object):
             'location': self.location,
             'date': self.date,
             'number_of_turns': self.number_of_turns,
-            'instances': self.instances,
+            'rounds': self.rounds,
             'players': self.players,
             'time_control': self.time_control,
             'description': self.description,

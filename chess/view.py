@@ -97,7 +97,7 @@ def print_round(players_list, round_number):
     clear_terminal()
     players_names = []
     for p in players_list:
-        players_names.append(p.firstname + ' ' + p.lastname)
+        players_names.append(p.firstname + ' ' + p.lastname + ' (' + str(p.total_score) + ') ')
 
     print(
         '\nRound numéro ' + str(round_number) + '\n' +
@@ -113,6 +113,24 @@ def print_round(players_list, round_number):
         'Appuyez sur entrée pour saisir les résultats'
     )
     input()
+
+
+def ask_match_result(player1, player2):
+    clear_terminal()
+    print(
+        'Sélectionnez le joueur qui a gagné le match, ou 0 pour saisir une égalité :\n' +
+        '1: ' + player1.firstname + ' ' + player1.lastname + '\n'
+        '2: ' + player2.firstname + ' ' + player2.lastname + '\n'    
+    )
+    choice = input()
+    match = [] 
+    if choice == '1':
+        match = ([player1.doc_id, '1'],[player2.doc_id, '0'])
+    elif choice == '2':
+        match = ([player1.doc_id, '0'],[player2.doc_id, '1'])
+    elif choice == '0':
+        match = ([player1.doc_id, '0.5'],[player2.doc_id, '0.5'])
+    return match
 
 
 def clear_terminal():
