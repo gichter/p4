@@ -46,24 +46,28 @@ class Tournament(object):
         self.number_of_turns = number_of_turns
         self.players = players
         self.rounds = rounds
+        self.doc_id = 0
 
     def __init__(self, data):
         self.players = []
         for key in data:
             setattr(self, key, data[key])
 
+    def update_doc_id(self, doc_id):
+        self.doc_id = doc_id
+
     def add_player(self, player):
         self.players.append(player)
 
+    #takes the ordered player list to use to create the matches
     def create_round(self, players_list):
-        if (len(self.rounds) <= int(self.number_of_turns)):
-            round = ["Round" + str(len(self.rounds)), datetime.now()]
-            view.print_round(players_list, len(self.rounds))
-            for i in range(4):
-                round.append(view.ask_match_result(players_list[i*2], players_list[i*2+1]))
-        round.insert(2, datetime.now())
-        print(round)
-        input()
+        round = ["Round" + str(len(self.rounds) + 1), str(datetime.now())]
+        view.print_round(players_list, len(self.rounds))
+        for i in range(4):
+            round.append(view.ask_match_result(players_list[i*2], players_list[i*2+1]))
+        round.insert(2, str(datetime.now()))
+        return round
+    
 
     def insert_tournament(self):
         serialized_tournament = {
@@ -77,6 +81,20 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
+    
+    def update_tournament(self, tournament_id):
+        if (isinstance(tournament_id, str)):
+            tournament_id = int(tournament_id)
+        db_tournament.upsert(table.Document({
+                'name': self.name,
+                'location': self.location,
+                'date': self.date,
+                'number_of_turns': self.number_of_turns,
+                'rounds': self.rounds,
+                'players': self.players,
+                'time_control': self.time_control,
+                'description': self.description,
+            }, doc_id=tournament_id))
 
 
 def update_player(player, player_id):
@@ -87,20 +105,6 @@ def update_player(player, player_id):
             'sex': player['sex'],
             }, doc_id=int(player_id)))
 
-
-def update_tournament(tournament, tournament_id):
-    if (isinstance(tournament_id, str)):
-        tournament_id = int(tournament_id)
-    db_tournament.upsert(table.Document({
-            'name': tournament.name,
-            'location': tournament.location,
-            'date': tournament.date,
-            'number_of_turns': tournament.number_of_turns,
-            'rounds': tournament.rounds,
-            'players': tournament.players,
-            'time_control': tournament.time_control,
-            'description': tournament.description,
-        }, doc_id=tournament_id))
 
 
 def update_tournament_dict(tournament, tournament_id):

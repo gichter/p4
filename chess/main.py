@@ -98,35 +98,62 @@ def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament_data = view.select_tournament(model.search_tournament_by_name(name))
     tournament = model.Tournament(tournament_data)
+    tournament.update_doc_id(tournament_data.doc_id)
     if(len(tournament.players) < 8):
         tournament = create_player_pool(tournament, 8 - len(tournament.players))
-    model.update_tournament(tournament, tournament_data.doc_id)
+    tournament.update_tournament(tournament_data.doc_id)
     return tournament
 
 
-def play_tournament(tournament):
-    players_list = []
+def create_player_list(tournament):
+    player_list = []
     for player_id in tournament.players:
         p_dict = model.search_player_by_doc_id(player_id)
         p = model.Player(lastname = p_dict['lastname'],firstname=p_dict['firstname'], birthdate=p_dict['birthdate'], sex=p_dict['sex'], total_score=p_dict['total_score'])
         p.update_doc_id(player_id)
-        players_list.append(p)
+        player_list.append(p)
+    if (len(tournament.rounds) == 0):
+        player_list.sort(key=lambda x: x.total_score, reverse=True)
+        l1 = player_list[0:4]
+        l2 = player_list[4:8]
+        player_list = []        
+        for i in range(4):
+            player_list.append(l1[i])
+            player_list.append(l2[i])
+    else:
+        for p in player_list:
+            print(p.doc_id)
+            for r in tournament.rounds:
+                for i in range(4):
+                    if(r[i+3][0][0] == p.doc_id):
+                        p.score += float(r[i+3][0][1])
+                    if(r[i+3][1][0] == p.doc_id):
+                        p.score += float(r[i+3][0][1])
+            print(p.score)
+            print('---------------------')
+            #on récupère les points des joueurs selons les rounds qu'ils ont joué. 
+            #Il s'agit maintenant de faire un classement dans une liste, en de vérifier s'ils n'ont pas déjà joué ensemble
+        input()
 
-    players_list.sort(key=lambda x: x.total_score, reverse=True)
-    l1 = players_list[0:4]
-    l2 = players_list[4:8]
-    players_list = []
-    
-    for i in range(4):
-        players_list.append(l1[i])
-        players_list.append(l2[i])
+        player_list.sort(key=lambda x: x.score, reverse=True)
+    return player_list
 
-    tournament.create_round(players_list)
 
-    for p in players_list:
-        print(str(p.doc_id) + " score : " + str(p.total_score))
-    input()
+def check_if_players_played_together(player1, player2):
     pass
+
+
+def play_tournament(tournament):
+    player_list = create_player_list(tournament)
+    print(player_list)
+    input()
+    if(len(tournament.rounds) <= int(tournament.number_of_turns)):
+        tournament.rounds.append(tournament.create_round(player_list))
+    else:
+        view.clear_terminal()
+        print('Tournoi fini #todo')
+        input()
+    tournament.update_tournament(tournament.doc_id)
 
 
 def main():
