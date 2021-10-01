@@ -4,7 +4,7 @@
 import view
 from tinydb import TinyDB
 import model
-from faker import Faker
+# from faker import Faker
 
 
 def show_players():
@@ -109,14 +109,16 @@ def create_player_list(tournament):
     player_list = []
     for player_id in tournament.players:
         p_dict = model.search_player_by_doc_id(player_id)
-        p = model.Player(lastname = p_dict['lastname'],firstname=p_dict['firstname'], birthdate=p_dict['birthdate'], sex=p_dict['sex'], total_score=p_dict['total_score'])
+        p = model.Player(
+            lastname=p_dict['lastname'], firstname=p_dict['firstname'], birthdate=p_dict['birthdate'],
+            sex=p_dict['sex'], total_score=p_dict['total_score'])
         p.update_doc_id(player_id)
         player_list.append(p)
     if (len(tournament.rounds) == 0):
         player_list.sort(key=lambda x: x.total_score, reverse=True)
         l1 = player_list[0:4]
         l2 = player_list[4:8]
-        player_list = []        
+        player_list = []
         for i in range(4):
             player_list.append(l1[i])
             player_list.append(l2[i])
@@ -134,40 +136,27 @@ def create_player_list(tournament):
             for i in range(3):
                 k = 1
                 while True:
-                    print('--------')
-                    print(str(k) + ' / ' + str(len(player_list)))
-                    print('--------')
                     if not (players_played_together(tournament, (player_list[0]), player_list[k])):
-                        print(player_list[0].firstname + ' / ' + player_list[k].firstname)
-                        print(k)
-                        input()
                         p.append(player_list[0])
                         p.append(player_list[k])
                         player_list.pop(0)
                         player_list.pop(k - 1)
-                        print('-------------')
-                        for m in player_list:
-                            print(m.firstname)
-                        print('-------------')
-                        for m in p:
-                            print(m.firstname)
-                        print('-------------')
                         break
                     if(k+1 == len(player_list)):
                         break
                     k += 1
             player_list = p + player_list
-            for p in player_list:
-                print(p.firstname)
     return player_list
 
 
 def players_played_together(tournament, player1, player2):
     for r in tournament.rounds:
         for i in range(4):
-            if((r[i+3][0][0] == player1.doc_id) and (r[i+3][1][0] == player2.doc_id) or (r[i+3][0][0] == player2.doc_id) and (r[i+3][1][0] == player1.doc_id)):
+            if((r[i+3][0][0] == player1.doc_id) and (r[i+3][1][0] == player2.doc_id)
+                    or (r[i+3][0][0] == player2.doc_id) and (r[i+3][1][0] == player1.doc_id)):
                 return True
     return False
+
 
 def play_tournament(tournament):
     while len(tournament.rounds) < int(tournament.number_of_turns):
@@ -180,8 +169,6 @@ def play_tournament(tournament):
         view.clear_terminal()
         print('Tournoi fini #todo')
         input()
-
-#boucle de tournoi tant que l'on n'a pas fait toutes les rondes TODO
 
 
 def main():

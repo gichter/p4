@@ -97,18 +97,20 @@ def print_round(players_list, round_number):
     clear_terminal()
     players_names = []
     for p in players_list:
-        players_names.append(str(p.doc_id) + ': ' + p.firstname + ' ' + p.lastname + ' (' + str(p.total_score) + ')/(' + str(p.score) + ')')
+        players_names.append(
+            str(p.doc_id) + ': ' + p.firstname + ' ' + p.lastname +
+            ' (' + str(p.total_score) + ')/(' + str(p.score) + ')')
 
     print(
         '\nRound numéro ' + str(round_number) + '\n' +
         '----------------------------------------------------\n'
-        'Match n°1 : ' + players_names[0] + ' vs ' +  players_names[1] + '\n' +
+        'Match n°1 : ' + players_names[0] + ' vs ' + players_names[1] + '\n' +
         '----------------------------------------------------\n'
-        'Match n°2 : ' + players_names[2] + ' vs ' +  players_names[3] + '\n' +
+        'Match n°2 : ' + players_names[2] + ' vs ' + players_names[3] + '\n' +
         '----------------------------------------------------\n'
-        'Match n°3 : ' + players_names[4] + ' vs ' +  players_names[5] + '\n' +
+        'Match n°3 : ' + players_names[4] + ' vs ' + players_names[5] + '\n' +
         '----------------------------------------------------\n'
-        'Match n°4 : ' + players_names[6] + ' vs ' +  players_names[7] + '\n' +
+        'Match n°4 : ' + players_names[6] + ' vs ' + players_names[7] + '\n' +
         '----------------------------------------------------\n' +
         'Appuyez sur entrée pour saisir les résultats'
     )
@@ -120,16 +122,16 @@ def ask_match_result(player1, player2):
     print(
         'Sélectionnez le joueur qui a gagné le match, ou 0 pour saisir une égalité :\n' +
         '1: ' + player1.firstname + ' ' + player1.lastname + '\n'
-        '2: ' + player2.firstname + ' ' + player2.lastname + '\n'    
+        '2: ' + player2.firstname + ' ' + player2.lastname + '\n'
     )
     choice = input()
-    match = [] 
+    match = []
     if choice == '1':
-        match = ([player1.doc_id, '1'],[player2.doc_id, '0'])
+        match = ([player1.doc_id, '1'], [player2.doc_id, '0'])
     elif choice == '2':
-        match = ([player1.doc_id, '0'],[player2.doc_id, '1'])
+        match = ([player1.doc_id, '0'], [player2.doc_id, '1'])
     elif choice == '0':
-        match = ([player1.doc_id, '0.5'],[player2.doc_id, '0.5'])
+        match = ([player1.doc_id, '0.5'], [player2.doc_id, '0.5'])
     return match
 
 

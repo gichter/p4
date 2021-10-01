@@ -36,7 +36,9 @@ class Player(object):
 
 
 class Tournament(object):
-    def __init__(self, name, location, date_start, date_end, time_control, description, number_of_turns=4, players=[], rounds=[]):
+    def __init__(
+        self, name, location, date_start, date_end, time_control,
+            description, number_of_turns=4, players=[], rounds=[]):
         self.name = name
         self.location = location
         self.date_start = date_start
@@ -48,18 +50,13 @@ class Tournament(object):
         self.rounds = rounds
         self.doc_id = 0
 
-    def __init__(self, data):
-        self.players = []
-        for key in data:
-            setattr(self, key, data[key])
-
     def update_doc_id(self, doc_id):
         self.doc_id = doc_id
 
     def add_player(self, player):
         self.players.append(player)
 
-    #takes the ordered player list to use to create the matches
+    # takes the ordered player list to use to create the matches
     def create_round(self, players_list):
         round = ["Round" + str(len(self.rounds) + 1), str(datetime.now())]
         view.print_round(players_list, len(self.rounds)+1)
@@ -67,7 +64,6 @@ class Tournament(object):
             round.append(view.ask_match_result(players_list[i*2], players_list[i*2+1]))
         round.insert(2, str(datetime.now()))
         return round
-    
 
     def insert_tournament(self):
         serialized_tournament = {
@@ -81,7 +77,7 @@ class Tournament(object):
             'description': self.description,
         }
         return db_tournament.insert(serialized_tournament)
-    
+
     def update_tournament(self, tournament_id):
         if (isinstance(tournament_id, str)):
             tournament_id = int(tournament_id)
@@ -104,7 +100,6 @@ def update_player(player, player_id):
             'birthdate': player['birthdate'],
             'sex': player['sex'],
             }, doc_id=int(player_id)))
-
 
 
 def update_tournament_dict(tournament, tournament_id):
