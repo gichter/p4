@@ -62,7 +62,7 @@ class Tournament(object):
     #takes the ordered player list to use to create the matches
     def create_round(self, players_list):
         round = ["Round" + str(len(self.rounds) + 1), str(datetime.now())]
-        view.print_round(players_list, len(self.rounds))
+        view.print_round(players_list, len(self.rounds)+1)
         for i in range(4):
             round.append(view.ask_match_result(players_list[i*2], players_list[i*2+1]))
         round.insert(2, str(datetime.now()))

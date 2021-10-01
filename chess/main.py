@@ -122,38 +122,49 @@ def create_player_list(tournament):
             player_list.append(l2[i])
     else:
         for p in player_list:
-            print(p.doc_id)
             for r in tournament.rounds:
                 for i in range(4):
                     if(r[i+3][0][0] == p.doc_id):
                         p.score += float(r[i+3][0][1])
                     if(r[i+3][1][0] == p.doc_id):
                         p.score += float(r[i+3][0][1])
-            print(p.score)
-            print('---------------------')
+        player_list.sort(key=lambda x: (-x.score, -x.total_score))
+        p = []
+        for i in range(4):
+            k = 1
+            while True:
+                if not (players_played_together(tournament, (player_list[0]), player_list[k])):
+                    p.append(player_list[0])
+                    p.append(player_list[k])
+                    player_list.pop(0)
+                    player_list.pop(k)
+                    break
+                k += 1
             #on récupère les points des joueurs selons les rounds qu'ils ont joué. 
             #Il s'agit maintenant de faire un classement dans une liste, en de vérifier s'ils n'ont pas déjà joué ensemble
-        input()
-
-        player_list.sort(key=lambda x: x.score, reverse=True)
     return player_list
 
 
-def check_if_players_played_together(player1, player2):
-    pass
-
+def players_played_together(tournament, player1, player2):
+    for r in tournament.rounds:
+        for i in range(4):
+            if((r[i+3][0][0] == player1.doc_id) and (r[i+3][1][0] == player2.doc_id) or (r[i+3][0][0] == player2.doc_id) and (r[i+3][1][0] == player1.doc_id)):
+                return True
+    return False
 
 def play_tournament(tournament):
-    player_list = create_player_list(tournament)
-    print(player_list)
-    input()
-    if(len(tournament.rounds) <= int(tournament.number_of_turns)):
+    while len(tournament.rounds) < int(tournament.number_of_turns):
+        player_list = create_player_list(tournament)
+        print(player_list)
+        input()
         tournament.rounds.append(tournament.create_round(player_list))
-    else:
+        tournament.update_tournament(tournament.doc_id)
+    if tournament.number_of_turns == len(tournament.rounds):
         view.clear_terminal()
         print('Tournoi fini #todo')
         input()
-    tournament.update_tournament(tournament.doc_id)
+
+#boucle de tournoi tant que l'on n'a pas fait toutes les rondes TODO
 
 
 def main():

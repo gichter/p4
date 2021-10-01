@@ -97,7 +97,7 @@ def print_round(players_list, round_number):
     clear_terminal()
     players_names = []
     for p in players_list:
-        players_names.append(p.firstname + ' ' + p.lastname + ' (' + str(p.total_score) + ') ')
+        players_names.append(p.firstname + ' ' + p.lastname + ' (' + str(p.total_score) + ')/(' + str(p.score) + ')')
 
     print(
         '\nRound numéro ' + str(round_number) + '\n' +
