@@ -127,21 +127,38 @@ def create_player_list(tournament):
                     if(r[i+3][0][0] == p.doc_id):
                         p.score += float(r[i+3][0][1])
                     if(r[i+3][1][0] == p.doc_id):
-                        p.score += float(r[i+3][0][1])
+                        p.score += float(r[i+3][1][1])
         player_list.sort(key=lambda x: (-x.score, -x.total_score))
-        p = []
-        for i in range(4):
-            k = 1
-            while True:
-                if not (players_played_together(tournament, (player_list[0]), player_list[k])):
-                    p.append(player_list[0])
-                    p.append(player_list[k])
-                    player_list.pop(0)
-                    player_list.pop(k)
-                    break
-                k += 1
-            #on récupère les points des joueurs selons les rounds qu'ils ont joué. 
-            #Il s'agit maintenant de faire un classement dans une liste, en de vérifier s'ils n'ont pas déjà joué ensemble
+        if (len(tournament.rounds) >= 2):
+            p = []
+            for i in range(3):
+                k = 1
+                while True:
+                    print('--------')
+                    print(str(k) + ' / ' + str(len(player_list)))
+                    print('--------')
+                    if not (players_played_together(tournament, (player_list[0]), player_list[k])):
+                        print(player_list[0].firstname + ' / ' + player_list[k].firstname)
+                        print(k)
+                        input()
+                        p.append(player_list[0])
+                        p.append(player_list[k])
+                        player_list.pop(0)
+                        player_list.pop(k - 1)
+                        print('-------------')
+                        for m in player_list:
+                            print(m.firstname)
+                        print('-------------')
+                        for m in p:
+                            print(m.firstname)
+                        print('-------------')
+                        break
+                    if(k+1 == len(player_list)):
+                        break
+                    k += 1
+            player_list = p + player_list
+            for p in player_list:
+                print(p.firstname)
     return player_list
 
 
