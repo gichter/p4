@@ -185,7 +185,6 @@ def main():
             view.display_players(model.load_players())
         elif choice == "5":
             view.display_tournaments(model.load_tournaments())
-            input("Appuyez sur une touche pour continuer")
         elif choice == "6":
             edit_player()
         elif choice == "7":

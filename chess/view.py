@@ -95,6 +95,14 @@ def display_tournaments(tournaments):
     for tournament in tournaments:
         i += 1
         print(str(i) + ": " + tournament["name"] + " - " + tournament["date"])
+    while True:
+        choice = int(input('\nSélectionnez l\'id du tournoi à visualiser\nSaisir 0 pour retrourner au menu principal\n'))
+        if choice > 0 and choice <= i:
+            print(tournaments[choice - 1])
+            input("Appuyez sur une touche pour continuer")
+            break
+        elif choice == 0:
+            break
 
 
 def select_player(players):
