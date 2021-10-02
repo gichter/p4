@@ -65,10 +65,28 @@ def prompt_new_player():
 
 def display_players(players):
     clear_terminal()
+    print(
+        'Sélectionner l\'affichage des joueurs désiré :\n'
+        '1: Par ordre alphabétique\n'
+        '2: Par classement\n'
+        '0: Quitter et revenir au menu principal\n'
+        )
+    while True:
+        choice = input('')
+        if choice == '1':
+            players.sort(key=lambda x: x['lastname'])
+            break
+        elif choice == '2':
+            players.sort(key=lambda x: -x['total_score'])
+            break
+        elif choice == '0':
+            return 0
     i = 0
+    clear_terminal()
     for player in players:
         i += 1
-        print(str(i) + ": " + player["firstname"] + " " + player["lastname"])
+        print(str(i) + ": " + player["lastname"] + " " + player["firstname"] + " (" + str(player["total_score"]) + ")")
+    input("Appuyez sur une touche pour continuer")
 
 
 def display_tournaments(tournaments):

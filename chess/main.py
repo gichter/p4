@@ -183,7 +183,6 @@ def main():
             t = import_tournament()
         elif choice == "4":
             view.display_players(model.load_players())
-            input("Appuyez sur une touche pour continuer")
         elif choice == "5":
             view.display_tournaments(model.load_tournaments())
             input("Appuyez sur une touche pour continuer")
