@@ -37,16 +37,16 @@ class Player(object):
 
 class Tournament(object):
     def __init__(
-        self, name, location, date_start, date_end, time_control,
-            description, number_of_turns=4, players=[], rounds=[]):
+        self, name, location, time_control,
+            description, date_start=0, date_end=0, number_of_turns=4, players=[], rounds=[]):
         self.name = name
         self.location = location
-        self.date_start = date_start
-        self.date_end = date_end
         self.time_control = time_control
         self.description = description
         self.number_of_turns = number_of_turns
         self.players = players
+        self.date_start = date_start
+        self.date_end = date_end
         self.rounds = rounds
         self.doc_id = 0
 

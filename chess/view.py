@@ -1,5 +1,7 @@
 from os import system, name
 
+from model import Tournament
+
 
 def main_menu():
     clear_terminal()
@@ -94,11 +96,25 @@ def display_tournaments(tournaments):
     i = 0
     for tournament in tournaments:
         i += 1
-        print(str(i) + ": " + tournament["name"] + " - " + tournament["date"])
+        print(str(i) + ": " + tournament["name"] + " - " + tournament["date_start"])
     while True:
-        choice = int(input('\nSélectionnez l\'id du tournoi à visualiser\nSaisir 0 pour retrourner au menu principal\n'))
+        choice = int(input('\nSélectionnez l\'id du tournoi à visualiser\nSaisir 0 pour retourner au menu principal\n'))
         if choice > 0 and choice <= i:
-            print(tournaments[choice - 1])
+            tournament = Tournament(tournaments[choice-1]["name"],
+            tournaments[choice-1]["location"],
+            tournaments[choice-1]["time_control"],
+            tournaments[choice-1]["description"],
+            tournaments[choice-1]["number_of_turns"],
+            tournaments[choice-1]["players"],
+            tournaments[choice-1]["date_start"],
+            tournaments[choice-1]["date_end"],
+            tournaments[choice-1]["rounds"]
+            )
+            for r in tournament.rounds:
+                print(r[0])
+            choice = int(input(
+                '\nSélectionnez l\'id de la tournée à visualiser\nSaisir 0 pour retourner au menu principal\n'))
+            print(tournaments[choice - 1]["name"])
             input("Appuyez sur une touche pour continuer")
             break
         elif choice == 0:
@@ -111,11 +127,11 @@ def select_player(players):
     return list(players)[int(choice) - 1].doc_id
 
 
-def select_tournament(tournaments):
+def select_tournament(tournaments): # ???
     display_tournaments(tournaments)
-    choice = input("Quel tournoi souhaitez-vous charger ? Sélectionnez son index.\n")
+    choice = input("Quel tournoi souhaitez-vous selectionner ? Sélectionnez son index.\n")
     tournament = list(tournaments)[int(choice) - 1]
-    input("Tournoi " + tournament['name'] + " chargé avec succès. Appuyez sur une touche pour continuer.\n")
+    input("Tournoi " + tournament['name'] + " selectionné avec succès. Appuyez sur une touche pour continuer.\n")
     return tournament
 
 
