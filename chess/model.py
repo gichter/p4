@@ -91,6 +91,31 @@ class Tournament(object):
                 'time_control': self.time_control,
                 'description': self.description,
             }, doc_id=tournament_id))
+    
+    def print_round(self, round_number):
+        player_ids = []
+        player_scores = []
+        for i in range(4):
+            player_ids.append(self.rounds[round_number][i+3][0][0])
+            player_ids.append(self.rounds[round_number][i+3][1][0])
+            player_scores.append(self.rounds[round_number][i+3][0][1])
+            player_scores.append(self.rounds[round_number][i+3][1][1])
+        print(self.rounds[round_number][0])
+        print(datetime.fromisoformat(self.rounds[round_number][1]).strftime("Début de la ronde : %d/%m/%Y à %H:%M"))
+        print(datetime.fromisoformat(self.rounds[round_number][2]).strftime("Fin de la ronde : %d/%m/%Y à %H:%M"))
+        print('\nRésultats de la ronde :\n----------------------------------------------------')
+        j = 1
+        for i in range(0, 8, 2):
+            print('Match n°' + str(j) + ' : ' + get_player_name_with_id(player_ids[i]) + ' (' +
+            player_scores[i] + ') vs ' +
+            get_player_name_with_id(player_ids[i+1]) + ' (' +  player_scores[i+1] + ')' + '\n' + 
+            '----------------------------------------------------')
+            j += 1
+
+
+def get_player_name_with_id(player_id):
+    player = search_player_by_doc_id(player_id)
+    return player['firstname'] + ' ' + player['lastname']
 
 
 def update_player(player, player_id):
