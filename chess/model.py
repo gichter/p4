@@ -69,7 +69,8 @@ class Tournament(object):
         serialized_tournament = {
             'name': self.name,
             'location': self.location,
-            'date': self.date,
+            'date_start': self.date_start,
+            'date_end': self.date_end,
             'number_of_turns': self.number_of_turns,
             'rounds': self.rounds,
             'players': self.players,
@@ -84,7 +85,8 @@ class Tournament(object):
         db_tournament.upsert(table.Document({
                 'name': self.name,
                 'location': self.location,
-                'date': self.date,
+                'date': self.date_start,
+                'date': self.date_end,
                 'number_of_turns': self.number_of_turns,
                 'rounds': self.rounds,
                 'players': self.players,

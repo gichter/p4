@@ -36,15 +36,15 @@ def add_player(prompted_player):
 
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
-    tournament = model.Tournament({
-        "name": prompted_tournament['name'],
-        "location": prompted_tournament['location'],
-        "date": prompted_tournament['date'],
-        "number_of_turns": prompted_tournament['number_of_turns'],
-        "instances": prompted_tournament['instances'],
-        "time_control": prompted_tournament['time_control'],
-        "description": prompted_tournament['description']
-    })
+    tournament = model.Tournament(
+        name=prompted_tournament['name'],
+        location=prompted_tournament['location'],
+        time_control=prompted_tournament['time_control'],
+        description=prompted_tournament['description'],
+        date_start=prompted_tournament['date_start'],
+        date_end=prompted_tournament['date_end'],
+        number_of_turns=prompted_tournament['number_of_turns'],
+    )
     return tournament
 
 
@@ -96,12 +96,10 @@ def edit_tournament():
 # returns a tournament object after asking the user to select one
 def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
-    tournament_data = view.select_tournament(model.search_tournament_by_name(name))
-    tournament = model.Tournament(tournament_data)
-    tournament.update_doc_id(tournament_data.doc_id)
+    tournament = view.select_tournament(model.search_tournament_by_name(name))
     if(len(tournament.players) < 8):
         tournament = create_player_pool(tournament, 8 - len(tournament.players))
-    tournament.update_tournament(tournament_data.doc_id)
+    tournament.update_tournament(tournament.doc_id)
     return tournament
 
 
@@ -165,9 +163,9 @@ def play_tournament(tournament):
         input()
         tournament.rounds.append(tournament.create_round(player_list))
         tournament.update_tournament(tournament.doc_id)
-    if tournament.number_of_turns == len(tournament.rounds):
+    if int(tournament.number_of_turns) == len(tournament.rounds):
         view.clear_terminal()
-        print('Tournoi fini #todo')
+        print('Tournoi terminé. Pour afficher les résultats de ce dernier, rendez-vous dans la liste des tournois.\nAppuyez sur entrée pour retourner au menu principal')
         input()
 
 

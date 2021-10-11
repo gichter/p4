@@ -15,7 +15,7 @@ def main_menu():
     print("5: Liste des tournois")
     print("6: Modifier les informations d'un joueur")
     print("7: Modifier les informations d'un tournoi")
-    print("8: Lancer le dernier tournoi chargé ou créé")
+    print("8: Lancer le dernier tournoi chargé (Choix numéro 3)")
     print("0: Quitter")
     print("_________________________________________________________")
     print("")
@@ -32,19 +32,19 @@ def prompt_new_tournament():
     clear_terminal()
     name = input("Nom du tournoi ?\n")
     location = input("Lieu ?\n")
-    date = input("Date ?\n")
-    number_of_turns = input("Nombre de tours ?\n")
-    instances = input("Tournées ?\n")
     time_control = input("Format ?\n")
     description = input("Description ?\n")
+    date_start = input("Date de début ?\n")
+    date_end = input("Date de fin ?\n")
+    number_of_turns = input("Nombre de tours ?\n")
     tournament = {
         'name': name,
         'location': location,
-        'date': date,
-        'number_of_turns': number_of_turns,
-        'instances': instances,
         'time_control': time_control,
         'description': description,
+        'date_start': date_start,
+        'date_end': date_end,
+        'number_of_turns': number_of_turns,
     }
     return tournament
 
@@ -135,6 +135,28 @@ def display_tournaments(tournaments):
         return 0
 
 
+def display_tournaments_list(tournaments):
+    i = 0
+    for tournament in tournaments:
+        i += 1
+        print(str(i) + ": " + tournament["name"] + " - " + tournament["date_start"])
+    choice = int(input('\nSélectionnez l\'id du tournoi à charger\nSaisir 0 pour retourner au menu principal\n'))
+    if choice > 0 and choice <= i:
+        tournament = Tournament(tournaments[choice-1]["name"],
+        tournaments[choice-1]["location"],
+        tournaments[choice-1]["time_control"],
+        tournaments[choice-1]["description"],
+        tournaments[choice-1]["date_start"],
+        tournaments[choice-1]["date_end"],
+        tournaments[choice-1]["number_of_turns"],
+        tournaments[choice-1]["players"],
+        tournaments[choice-1]["rounds"]
+        )
+    tournament.update_doc_id(tournaments[choice-1].doc_id)
+    return tournament
+
+
+
 def select_player(players):
     display_players(players)
     choice = input("Quel joueur souhaitez-vous modifier ? Sélectionnez son index.")
@@ -142,10 +164,8 @@ def select_player(players):
 
 
 def select_tournament(tournaments): # ???
-    display_tournaments(tournaments)
-    choice = input("Quel tournoi souhaitez-vous selectionner ? Sélectionnez son index.\n")
-    tournament = list(tournaments)[int(choice) - 1]
-    input("Tournoi " + tournament['name'] + " selectionné avec succès. Appuyez sur une touche pour continuer.\n")
+    tournament = display_tournaments_list(tournaments)
+    input("Tournoi " + tournament.name + " selectionné avec succès. Appuyez sur une touche pour continuer.\n")
     return tournament
 
 
