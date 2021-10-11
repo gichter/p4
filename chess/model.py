@@ -112,6 +112,29 @@ class Tournament(object):
             '----------------------------------------------------')
             j += 1
 
+    def print_results(self):
+        player_list = []
+        for player_id in self.players:
+            p_dict = search_player_by_doc_id(player_id)
+            p = Player(
+                lastname=p_dict['lastname'], firstname=p_dict['firstname'], birthdate=p_dict['birthdate'],
+                sex=p_dict['sex'], total_score=p_dict['total_score'])
+            p.update_doc_id(player_id)
+            player_list.append(p)
+        for p in player_list:
+            i = 0
+            for r in self.rounds:
+                for i in range(4):
+                    if(r[i+3][0][0] == p.doc_id):
+                        p.score += float(r[i+3][0][1])
+                    if(r[i+3][1][0] == p.doc_id):
+                        p.score += float(r[i+3][1][1])
+        player_list.sort(key=lambda x: (-x.score, -x.total_score))
+        i = 0
+        print('Classement du tournoi :')
+        for p in player_list:
+            i += 1
+            print(str(i) + ': ' + p.firstname + ' ' + p.lastname + ' : ' + str(p.score) + ' / ' + str(p.total_score))
 
 def get_player_name_with_id(player_id):
     player = search_player_by_doc_id(player_id)

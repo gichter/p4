@@ -103,28 +103,31 @@ def display_tournaments(tournaments):
         tournaments[choice-1]["location"],
         tournaments[choice-1]["time_control"],
         tournaments[choice-1]["description"],
-        tournaments[choice-1]["number_of_turns"],
-        tournaments[choice-1]["players"],
         tournaments[choice-1]["date_start"],
         tournaments[choice-1]["date_end"],
+        tournaments[choice-1]["number_of_turns"],
+        tournaments[choice-1]["players"],
         tournaments[choice-1]["rounds"]
         )
         while True:
             clear_terminal()
             print(tournament.name + ' (' + tournament.date_start + '): ' + tournament.location)
-            if (len(tournament.rounds) == tournament.number_of_turns):
+            if (len(tournament.rounds) == int(tournament.number_of_turns)):
                 print('Tournoi terminé. Afficher les résultats en tapant 9')
+            j = 0
             if(len(tournament.rounds) > 0):
-                j = 0
                 for r in tournament.rounds:
                     j += 1
                     print(str(j) + ': ' + r[0])
                 choice = int(input(
                     '\nSélectionnez l\'id de la tournée à visualiser\nSaisir 0 pour retourner au menu principal\n'))
-                clear_terminal()
                 if choice == 0:
                     break
-                print(tournament.print_round(choice-1))
+                if choice == 9 and len(tournament.rounds) == int(tournament.number_of_turns):
+                    clear_terminal()
+                    tournament.print_results()
+                else:
+                    print(tournament.print_round(choice-1))
             input("Appuyez sur une touche pour continuer")
             if tournament.rounds == []:
                 break
