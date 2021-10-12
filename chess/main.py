@@ -2,13 +2,10 @@
 # coding: utf-8
 
 import view
-from tinydb import TinyDB
 import model
-# from faker import Faker
 
-"""
-    Demande à l'utilisateur de saisir les informations d'un joueur afin de l'ajouter à la base de données.
-    """
+
+# Demande à l'utilisateur de saisir les informations d'un joueur afin de l'ajouter à la base de données.
 def add_player(prompted_player):
     player = model.Player(
         lastname=prompted_player['lastname'],
@@ -19,9 +16,7 @@ def add_player(prompted_player):
     return player.insert_user()
 
 
-    """
-    Demande à l'utilisateur de saisir les informations d'un tournoi
-    """
+# Demande à l'utilisateur de saisir les informations d'un tournoi
 def add_tournament():
     prompted_tournament = view.prompt_new_tournament()
     tournament = model.Tournament(
@@ -36,19 +31,15 @@ def add_tournament():
     return tournament
 
 
-    """
-    Permet de créer un tournoi et d'y ajouter des joueurs
-    """
+# Permet de créer un tournoi et d'y ajouter des joueurs
 def create_tournament():
     tournament = add_tournament()
     tournament = create_player_pool(tournament, 8)
     return tournament.insert_tournament()
 
 
-    """
-    Ajoute à un objet tournoi un nombre donné de joueurs.
-    On peut ajouter un joueur existant ou un nouveau joueur.
-    """
+# Ajoute à un objet tournoi un nombre donné de joueurs.
+# On peut ajouter un joueur existant ou un nouveau joueur.
 def create_player_pool(tournament, number_of_players_to_add):
     for i in range(9 - number_of_players_to_add, 9):
         view.clear_terminal()
@@ -74,9 +65,7 @@ def create_player_pool(tournament, number_of_players_to_add):
     return tournament
 
 
-    """
-    Permet à l'utilisateur de modifier un joueur après selection de ce dernier
-    """
+# Permet à l'utilisateur de modifier un joueur après selection de ce dernier
 def edit_player():
     lastname = input('Saisissez le nom du joueur à modifier')
     player_id = view.select_player(model.search_players_by_lastname(lastname))
@@ -84,9 +73,7 @@ def edit_player():
     input("Joueur modifié avec succès. Appuyez sur une touche pour continuer")
 
 
-    """
-    Permet à l'utilisateur de modifier un tournoi après selection de ce dernier
-    """
+# Permet à l'utilisateur de modifier un tournoi après selection de ce dernier
 def edit_tournament():
     name = input('Saisissez le nom du tournoi à modifier')
     tournament_id = view.select_tournament(model.search_tournament_by_name(name)).doc_id
@@ -94,9 +81,7 @@ def edit_tournament():
     input("Tournoi modifié avec succès. Appuyez sur une touche pour continuer")
 
 
-    """
-    Renvoie un objet tournoi après avoir demandé à l'utilisateur de selectionner un tournoi dans une liste
-    """
+# Renvoie un objet tournoi après avoir demandé à l'utilisateur de selectionner un tournoi dans une liste
 def import_tournament():
     name = input('Saisissez le nom du tournoi que vous souhaitez charger :\n')
     tournament = view.select_tournament(model.search_tournament_by_name(name))
@@ -106,11 +91,9 @@ def import_tournament():
     return tournament
 
 
-    """
-    Fonction de tri de la liste des joueurs d'un tournoi donné.
-    Trie les joueurs dans l'ordre décroissant de leur score de tournoi, puis trie les égalités selon le score total.
-    La fonction fait appel à 'players_played_together()' afin de ne pas refaire jouer deux joueurs ensemble plusieurs fois.
-    """
+# Fonction de tri de la liste des joueurs d'un tournoi donné.
+# Trie les joueurs dans l'ordre décroissant de leur score de tournoi, puis trie les égalités selon le score total.
+# Fait appel à 'players_played_together()' afin de ne pas refaire jouer deux joueurs ensemble plusieurs fois.
 def create_player_list(tournament):
     player_list = []
     for player_id in tournament.players:
@@ -154,10 +137,9 @@ def create_player_list(tournament):
             player_list = p + player_list
     return player_list
 
-    """
-    Vérifie si deux joueurs ont déjà joué ensemble dans un tournoi donné. 
-    Le tuple (joueur1, joueur2) est passé dans toutes les étapes de tous les rounds existants d'un tournoi.
-    """
+
+# Vérifie si deux joueurs ont déjà joué ensemble dans un tournoi donné.
+# Le tuple (joueur1, joueur2) est passé dans toutes les étapes de tous les rounds existants d'un tournoi.
 def players_played_together(tournament, player1, player2):
     for r in tournament.rounds:
         for i in range(4):
@@ -167,11 +149,9 @@ def players_played_together(tournament, player1, player2):
     return False
 
 
-    """
-    Prend en entrée un tournoi. 
-    Tant que toues les rondes ne sont pas jouées, relance une ronde et l'inscrit en base de données.
-    La fonction vérifie que le tournoi n'est pas fini.
-    """
+# Prend en entrée un tournoi.
+# Tant que toues les rondes ne sont pas jouées, relance une ronde et l'inscrit en base de données.
+# La fonction vérifie que le tournoi n'est pas fini.
 def play_tournament(tournament):
     while len(tournament.rounds) < int(tournament.number_of_turns):
         player_list = create_player_list(tournament)
@@ -181,12 +161,12 @@ def play_tournament(tournament):
         tournament.update_tournament(tournament.doc_id)
     if int(tournament.number_of_turns) == len(tournament.rounds):
         view.clear_terminal()
-        print('Tournoi terminé. Pour afficher les résultats de ce dernier, rendez-vous dans la liste des tournois.\nAppuyez sur entrée pour retourner au menu principal')
+        print('Tournoi terminé. Pour afficher les résultats de ce dernier, rendez-vous dans la liste des tournois. \
+        \nAppuyez sur entrée pour retourner au menu principal')
         input()
 
-    """
-    Boucle principale du programme. Connectée à la vue "main_menu"
-    """
+
+# Boucle principale du programme. Connectée à la vue "main_menu"
 def main():
     while True:
         view.main_menu()
@@ -208,8 +188,8 @@ def main():
         elif choice == "8":
             try:
                 play_tournament(t)
-            except:
-                pass
+            except t.DoesNotExist:
+                print("Veuillez charger un tournoi avec l'option numéro 3.")
         elif choice == "0":
             break
         else:

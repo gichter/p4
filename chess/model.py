@@ -50,19 +50,14 @@ class Tournament(object):
         self.rounds = rounds
         self.doc_id = 0
 
-
-        """
-        Associe l'id d'un tournoi à sa représentatiojn objet
-        """
+    # Associe l'id d'un tournoi à sa représentatiojn objet
     def update_doc_id(self, doc_id):
         self.doc_id = doc_id
 
     def add_player(self, player):
         self.players.append(player)
 
-        """
-        Créé un round selon la liste de joueurs ordonnée
-        """
+    # Créé un round selon la liste de joueurs ordonnée
     def create_round(self, players_list):
         round = ["Round " + str(len(self.rounds) + 1), str(datetime.now())]
         view.print_round(players_list, len(self.rounds)+1)
@@ -91,19 +86,16 @@ class Tournament(object):
         db_tournament.upsert(table.Document({
                 'name': self.name,
                 'location': self.location,
-                'date': self.date_start,
-                'date': self.date_end,
+                'date_start': self.date_start,
+                'date_end': self.date_end,
                 'number_of_turns': self.number_of_turns,
                 'rounds': self.rounds,
                 'players': self.players,
                 'time_control': self.time_control,
                 'description': self.description,
             }, doc_id=tournament_id))
-    
 
-    """
-    Affichage d'un round joué
-    """
+    # Affichage d'un round joué
     def print_round(self, round_number):
         player_ids = []
         player_scores = []
@@ -118,16 +110,14 @@ class Tournament(object):
         print('\nRésultats de la ronde :\n----------------------------------------------------')
         j = 1
         for i in range(0, 8, 2):
-            print('Match n°' + str(j) + ' : ' + get_player_name_with_id(player_ids[i]) + ' (' +
-            player_scores[i] + ') vs ' +
-            get_player_name_with_id(player_ids[i+1]) + ' (' +  player_scores[i+1] + ')' + '\n' + 
-            '----------------------------------------------------')
+            print(
+                'Match n°' + str(j) + ' : ' + get_player_name_with_id(player_ids[i]) + ' (' +
+                player_scores[i] + ') vs ' +
+                get_player_name_with_id(player_ids[i+1]) + ' (' + player_scores[i+1] + ')' + '\n' +
+                '----------------------------------------------------')
             j += 1
 
-
-        """
-        Affichage des résultats d'un tournoi
-        """
+# Affichage des résultats d'un tournoi
     def print_results(self):
         player_list = []
         for player_id in self.players:
@@ -151,6 +141,7 @@ class Tournament(object):
         for p in player_list:
             i += 1
             print(str(i) + ': ' + p.firstname + ' ' + p.lastname + ' : ' + str(p.score) + ' / ' + str(p.total_score))
+
 
 def get_player_name_with_id(player_id):
     player = search_player_by_doc_id(player_id)
