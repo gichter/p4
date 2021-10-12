@@ -50,13 +50,19 @@ class Tournament(object):
         self.rounds = rounds
         self.doc_id = 0
 
+
+        """
+        Associe l'id d'un tournoi à sa représentatiojn objet
+        """
     def update_doc_id(self, doc_id):
         self.doc_id = doc_id
 
     def add_player(self, player):
         self.players.append(player)
 
-    # takes the ordered player list to use to create the matches
+        """
+        Créé un round selon la liste de joueurs ordonnée
+        """
     def create_round(self, players_list):
         round = ["Round " + str(len(self.rounds) + 1), str(datetime.now())]
         view.print_round(players_list, len(self.rounds)+1)
@@ -94,6 +100,10 @@ class Tournament(object):
                 'description': self.description,
             }, doc_id=tournament_id))
     
+
+    """
+    Affichage d'un round joué
+    """
     def print_round(self, round_number):
         player_ids = []
         player_scores = []
@@ -114,6 +124,10 @@ class Tournament(object):
             '----------------------------------------------------')
             j += 1
 
+
+        """
+        Affichage des résultats d'un tournoi
+        """
     def print_results(self):
         player_list = []
         for player_id in self.players:
