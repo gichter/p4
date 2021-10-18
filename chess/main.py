@@ -155,8 +155,6 @@ def players_played_together(tournament, player1, player2):
 def play_tournament(tournament):
     while len(tournament.rounds) < int(tournament.number_of_turns):
         player_list = create_player_list(tournament)
-        print(player_list)
-        input()
         tournament.rounds.append(tournament.create_round(player_list))
         tournament.update_tournament(tournament.doc_id)
     if int(tournament.number_of_turns) == len(tournament.rounds):
